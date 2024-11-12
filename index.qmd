@@ -1,7 +1,7 @@
 ---
 title: "Unveiling Hidden Patterns: Clustering Analysis with ISMIP6 Models"
 author: Eleanor M. Byrne
-subtitle: Subtitle here if desired
+subtitle: A PCA and Clustering Analysis 
 date: today
 date-format: long
 ---
