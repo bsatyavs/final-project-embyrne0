@@ -1,6 +1,6 @@
 ---
-title: "My Final Project Template"
-author: Your name here
+title: "Unveiling Hidden Patterns: Clustering Analysis with ISMIP6 Models"
+author: Eleanor M. Byrne
 subtitle: Subtitle here if desired
 date: today
 date-format: long
