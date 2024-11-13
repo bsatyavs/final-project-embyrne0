@@ -12,7 +12,7 @@ How do different Global Climate Models (GCMs) impact the projections of ice shee
 
 The Ice Sheet Model Intercomparison Project for CMIP6 (ISMIP6) aims to address these questions by providing a framework for evaluating and comparing the responses of ice sheet models to various climate scenarios. ISMIP6 integrates multiple GCMs, RCPs, and ocean forcing datasets to project the future behavior of the Greenland and Antarctic ice sheets.
 
-This study focuses on analyzing the RCP experiments and looking at two key variables: land ice thickness and Surface Mass Balance flux. Principal Component Analysis (PCA) and K-means clustering will be used to analyze these variables, aiming to uncover patterns and groupings in the data. This approach will help to understand the variations in ice sheet response under various scenarios. **Hypothesis:** Variations in Representative Concentration Pathways (RCPs) will lead to significantly different projections of land ice thickness and Surface Mass Balance (SMB) flux in ISMIP6 simulations. Specifically, higher RCP scenarios will result in greater reductions in ice thickness and more negative SMB fluxes due to increased temperature and melting rates.
+This study focuses on analyzing the RCP experiments and looking at one key variable Surface Mass Balance flux. Principal Component Analysis (PCA) and K-means clustering will be used to analyze the variables, aiming to uncover patterns and groupings in the data. This approach will help to understand the variations in ice sheet response under various scenarios, RCP 8.5 and 2.6. **Hypothesis:** Variations in Representative Concentration Pathways (RCPs) will lead to significantly different projections of Surface Mass Balance (SMB) flux in ISMIP6 simulations. Specifically, higher RCP scenarios will result in greater reductions in ice thickness and more negative SMB fluxes due to increased temperature and melting rates.
 
 # Materials and methods
 
@@ -22,19 +22,11 @@ Narrative: Clear narrative description of the data sources and methods. Includes
 
 Code: The code associated with the project is well organized and easy to follow. Demonstrates mastery of R graphics and functions.
 
-Data: The underlying data are publicly accessible via the web and downloaded/accessed within the Rmd script. If you want to use your own data, you must make it available on a website (e.g. Figshare) so that others are able to re-run your code.
+Data:
 
-You can do bullets like this:
+The data used in this study was sourced from the Center for Computational Research (CCR) at the University at Buffalo. The ISMIP6 dataset was previously downloaded from the CCR repository, focusing on the experiment and variable types needed for the RCP experiment group. This dataset includes projections of land ice thickness and Surface Mass Balance (SMB) flux different Representative Concentration Pathways (RCPs).
 
--   The first most important thing
--   The second most important thing
--   The third most important thing
-
-You can do numbers like this:
-
-1.  The first most important thing
-2.  The second most important thing
-3.  The third most important thing
+[CCR website](https://www.buffalo.edu/ccr.html)
 
 See <http://rmarkdown.rstudio.com/> for all the amazing things you can do.
 
