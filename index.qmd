@@ -36,11 +36,14 @@ Load any required packages in a code chunk (you may need to install some package
 
 ```{r, message=F, warning=F}
 # loading needed packages 
+# install.packages("tidyverse")
 library(tidyverse)
+
 library(leaflet)
 library(kableExtra)
 library(htmlwidgets)
 library(widgetframe)
+library(lattice)
 library(ncdf4)
 library(stringr)
 library(dplyr)
@@ -63,7 +66,7 @@ nc_data # this is an example of what a lithk nc file would look like
 ## Download and clean all required data
 
 ```{r}
-file_dir <- "C:/Users/Margo/OneDrive/Documents/Fall 2024 Courses/Spatial Data Science Course/final-project-embyrne0/data"
+file_dir <- "C:/Users/Margo/OneDrive/Documents/final-project-embyrne0/data"
 
 # Variables to analyze
 vars <- c("acabf")
@@ -228,52 +231,50 @@ Add any additional processing steps here.
 Using the PCA and the K-means Clustering
 
 ```{r}
+# Initialize empty lists to store data for each experiment
+data_exp05 <- list()
+data_exp07 <- list()
 
-```
-
-```{r}
-# Combine data from both experiments (exp05 and exp07)
-combined_data <- list()
-
-# Iterate over the experiments
-for (experiment in exp) {
-  for (variable in vars) {
-    
-    # Initialize a list to store the 1D variable data for each experiment
-    exp_data <- list()
-    
-    # Loop through each key in your data_by_group_exp_var (already processed data)
-    for (key in names(data_by_group_exp_var)) {
-      # Check if the key corresponds to the current experiment and variable
-      if (grepl(paste0("_", experiment, "_", variable), key)) {
-        
-        # Combine the data for this experiment and variable
-        for (i in seq_along(data_by_group_exp_var[[key]])) {
-          exp_data[[length(exp_data) + 1]] <- data_by_group_exp_var[[key]][[i]]
-        }
-      }
-    }
-    
-    # Combine the data for this experiment into a matrix (rows = models, columns = grid cells)
-    if (length(exp_data) > 0) {
-      exp_matrix <- do.call(rbind, exp_data)
-      combined_data[[paste0(experiment, "_", variable)]] <- exp_matrix
-    }
+# Extract and prepare data for each experiment
+for (key in names(data_by_group_exp_var)) {
+  split_key <- strsplit(key, "_")[[1]]
+  model_group <- split_key[1]
+  model_name <- split_key[2]
+  experiment <- split_key[3]
+  variable <- split_key[4]
+  
+  # Combine all the data for this key into a matrix
+  data_matrix <- do.call(cbind, data_by_group_exp_var[[key]])
+  
+  # Store the data matrix in the respective experiment list
+  if (experiment == "exp05") {
+    data_exp05[[key]] <- data_matrix
+  } else if (experiment == "exp07") {
+    data_exp07[[key]] <- data_matrix
   }
 }
 
-# Now combine data from both experiments into a single matrix
-data_exp05 <- combined_data[["exp05_acabf"]]
-data_exp07 <- combined_data[["exp07_acabf"]]
+# Convert the lists to data frames for PCA
+df_exp05 <- do.call(rbind, data_exp05)
 
-# Ensure that both datasets have the same number of rows (models)
-# If not, additional handling may be needed to align them
+df_exp07 <- do.call(rbind, data_exp07)
+```
 
-# Stack the two datasets (exp05 and exp07) into one matrix
-final_data_matrix <- rbind(data_exp05, data_exp07)
+```{r}
+# Perform PCA on exp05 data
+# Perform PCA for exp05
+pca_exp05 <- prcomp(df_exp05[, !colnames(df_exp05) %in% "Experiment"], scale = TRUE)
 
-# Run PCA on the combined data matrix (center and scale the data)
-pca_result <- prcomp(final_data_matrix, center = TRUE, scale. = TRUE)
+# Perform PCA for exp07
+pca_exp07 <- prcomp(df_exp07[, !colnames(df_exp07) %in% "Experiment"], scale = TRUE)
+
+# Add experiment labels to PCA results
+pca_exp05_results <- data.frame(pca_exp05$x, Experiment = "exp05")
+pca_exp07_results <- data.frame(pca_exp07$x, Experiment = "exp07")
+
+# Combine the PCA results
+combined_pca_results <- rbind(pca_exp05_results, pca_exp07_results)
+
 ```
 
 # Results
@@ -286,13 +287,29 @@ Show tables, plots, etc. and describe them.
 
 ```{r}
 # Viewing the PCA Loadings of all the variables and files 
-for (key in names(pca_results)) {
-  for (i in seq_along(pca_results[[key]])) {
-    pca_loadings <- pca_results[[key]][[i]]$rotation
-    cat("\nPCA Loadings for", key, "entry", i, ":\n")
-    print(head(pca_loadings))
-  }
-}
+# Extract the loadings from the PCA result
+# Plot PCA for exp05
+# Create a data frame with the PCA results and the experiment labels
+pca_results <- data.frame(pca_combined$x, Experiment = combined_df$Experiment)
+
+# Plot PCA using factoextra
+fviz_pca_ind(pca_combined,
+             geom.ind = "point", 
+             col.ind = pca_results$Experiment, # color by experiment types
+             palette = c("#00AFBB", "#FC4E07"),
+             addEllipses = TRUE, 
+             legend.title = "Experiment")
+
+# Plot PCA using ggplot2 for custom visualization
+pca_plot_df <- data.frame(PC1 = pca_combined$x[,1], PC2 = pca_combined$x[,2], Experiment = combined_df$Experiment)
+
+ggplot(pca_plot_df, aes(x = PC1, y = PC2, color = Experiment)) +
+  geom_point(alpha = 0.7) +
+  stat_ellipse(level = 0.95) +
+  labs(title = "PCA of Combined Experiment Data",
+       x = "Principal Component 1",
+       y = "Principal Component 2") +
+  theme_minimal()
 ```
 
 ```{r, fig.width=6, fig.height=3, fig.cap="Map of completely random data"}
