@@ -50,16 +50,11 @@ knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling
 
 ## Download and clean all required data
 
-
-
-
-
 Add any additional processing steps here.
 
 # Methods
 
 Using the PCA and the K-means Clustering
-
 
 # Results
 
@@ -68,7 +63,6 @@ Using the PCA and the K-means Clustering
 Tables and figures (maps and other graphics) are carefully planned to convey the results of your analysis. Intense exploration and evidence of many trials and failures. The author looked at the data in many different ways before coming to the final presentation of the data.
 
 Show tables, plots, etc. and describe them.
-
 
 # Conclusions
 
