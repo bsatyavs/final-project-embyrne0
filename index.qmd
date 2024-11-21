@@ -26,19 +26,10 @@ Data:
 
 The data used in this study was sourced from the Center for Computational Research (CCR) at the University at Buffalo. The ISMIP6 dataset was previously downloaded from the CCR repository, focusing on the experiment and variable types needed for the RCP experiment group. This dataset includes projections of land ice thickness and Surface Mass Balance (SMB) flux different Representative Concentration Pathways (RCPs).
 
-[CCR website](https://www.buffalo.edu/ccr.html)
-
-See <http://rmarkdown.rstudio.com/> for all the amazing things you can do.
-
-Refer to output in your narrative like this: x=`r x` .
-
-Load any required packages in a code chunk (you may need to install some packages):
-
 ```{r, message=F, warning=F}
 # loading needed packages 
 # install.packages("tidyverse")
 library(tidyverse)
-
 library(leaflet)
 library(kableExtra)
 library(htmlwidgets)
