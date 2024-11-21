@@ -24,7 +24,7 @@ Code: The code associated with the project is well organized and easy to follow.
 
 Data:
 
-The data used in this study was sourced from the Center for Computational Research (CCR) at the University at Buffalo. The ISMIP6 dataset was previously downloaded from the CCR repository, focusing on the experiment and variable types needed for the RCP experiment group. This dataset includes projections of land ice thickness and Surface Mass Balance (SMB) flux different Representative Concentration Pathways (RCPs).
+The data used in this study was sourced from the Center for Computational Research (CCR) at the University at Buffalo. The ISMIP6 dataset was previously downloaded from the CCR repository, focusing on the experiment and variable types needed for the RCP experiment group. This dataset includes projections of land ice thickness different Representative Concentration Pathways (RCPs).
 
 ```{r, message=F, warning=F}
 # loading needed packages 
